@@ -107,12 +107,15 @@ public class UserDaoJDBCImpl implements UserDao {
         return userList;
     }
 
-    public void cleanUsersTable() {
+    public void cleanUsersTable() throws SQLException {
         Connection connection = Util.getConnection();
         try (Statement statement = connection.createStatement()){
             statement.executeUpdate("TRUNCATE TABLE users");
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+        if (connection != null) {
+            connection.close();
         }
     }
 }
